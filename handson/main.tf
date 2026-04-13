@@ -6,10 +6,16 @@ locals {
   app_name = "web"
 }
 
+variable "env" {
+  type        = string
+  default     = "handson"
+  
+}
+
 resource "aws_vpc" "web_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    Name = "${local.app_name}-vpc"
+    Name = "${var.env}-${local.app_name}-vpc"
   }
 }
 
@@ -17,6 +23,6 @@ resource "aws_subnet" "web_subnet" {
   vpc_id = aws_vpc.web_vpc.id
   cidr_block = "10.0.0.0/24"
   tags = {
-    Name = "${local.app_name}-subnet"
+    Name = "${var.env}-${local.app_name}-subnet"
   }
 }
